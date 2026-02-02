@@ -1,0 +1,30 @@
+---
+title: "Laboratorio 1"
+autor: "Javier Chávez, Genser Catalán"
+output: html_notebook
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+movies<- read.csv("../datos/movies_2026.csv")
+```
+
+```{r Ejercicio 1}
+
+```
+
+
+```{r Ejercicio 2}
+
+```
+
+
+```{r Ejercicio 3}
+
+```
+
