@@ -9,22 +9,95 @@ output: html_notebook
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r paquetes}
+library(ggplot2)
+library(nortest)
+```
+
+
 
 ```{r}
 movies<- read.csv("../datos/movies_2026.csv")
-```
-
-```{r Ejercicio 1}
-
+colnames(movies)
 ```
 
 
-```{r Ejercicio 2}
+### Ejercicio 1
 
+```{r variables numéricas}
+numericas <- c("budget","revenue","runtime","genresAmount","productionCoAmount","productionCountriesAmount","actorsAmount","castWomenAmount","castMenAmount","releaseYear") #Seleccionar solo numéricas
+movies_num <- movies[, numericas]
+colnames(movies_num)
+```
+```{r variables categóricas}
+movies_cat <- movies[, !names(movies) %in% c(numericas, "id")] #Seleccionar solo categóricas
+names(movies_cat)
+```
+El conjunto de datos está formado por '`r ncol(movies_num)` variables cuantitativas y '`r ncol(movies_cat)` variables cualitativas.
+
+```{r Resumen de conjunto de datos numéricos}
+summary(movies_num)
 ```
 
-
-```{r Ejercicio 3}
-
+```{r normalidad de variables cuantitativas}
+hist(movies_num$budget)
+boxplot(movies_num)
+lillie.test(movies_num$budget)
 ```
+La variable "budget" no sigue una distribución normal.
+
+```{r}
+hist(movies_num$revenue)
+boxplot(movies_num$revenue)
+lillie.test(movies_num$revenue)
+```
+
+```{r}
+hist(movies_num$runtime)
+boxplot(movies_num$runtime)
+lillie.test(movies_num$runtime)
+```
+
+```{r}
+hist(movies_num$genresAmount)
+boxplot(movies_num$genresAmount)
+lillie.test(movies_num$genresAmount)
+```
+
+```{r}
+hist(movies_num$productionCoAmount)
+boxplot(movies_num$productionCoAmount)
+lillie.test(movies_num$productionCoAmount)
+```
+
+```{r}
+hist(movies_num$productionCountriesAmount)
+boxplot(movies_num$productionCountriesAmount)
+lillie.test(movies_num$productionCountriesAmount)
+```
+
+```{r}
+hist(movies_num$actorsAmount)
+boxplot(movies_num$actorsAmount)
+lillie.test(movies_num$actorsAmount)
+```
+
+```{r}
+hist(movies_num$castWomenAmount)
+boxplot(movies_num$castWomenAmount)
+lillie.test(movies_num$castWomenAmount)
+```
+
+```{r}
+hist(movies_num$castMenAmount)
+boxplot(movies_num$castMenAmount)
+lillie.test(movies_num$castMenAmount)
+```
+
+```{r}
+hist(movies_num$releaseYear)
+boxplot(movies_num$releaseYear)
+lillie.test(movies_num$releaseYear)
+```
+
 

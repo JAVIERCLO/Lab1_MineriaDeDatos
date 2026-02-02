@@ -1756,28 +1756,274 @@ display: none;
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHViVzkyYVdWelBDMGdjbVZoWkM1amMzWW9YQ0l1TGk5a1lYUnZjeTl0YjNacFpYTmZNakF5Tmk1amMzWmNJaWxjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbm1vdmllczwtIHJlYWQuY3N2KFwiLi4vZGF0b3MvbW92aWVzXzIwMjYuY3N2XCIpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW92aWVzPC0gcmVhZC5jc3YoXCIuLi9kYXRvcy9tb3ZpZXNfMjAyNi5jc3ZcIilcbmBgYCJ9 -->
-<pre class="r"><code>movies&lt;- read.csv(&quot;../datos/movies_2026.csv&quot;)</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHViR2xpY21GeWVTaG5aM0JzYjNReUtWeHViR2xpY21GeWVTaHViM0owWlhOMEtWeHVZR0JnSW4wPSAtLT5cblxuYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeShub3J0ZXN0KVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnZ3Bsb3QyKVxubGlicmFyeShub3J0ZXN0KVxuYGBgIn0= -->
+<pre class="r"><code>library(ggplot2)
+library(nortest)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVZMjlzYm1GdFpYTW9iVzkyYVdWektWeHVYRzVnWUdBaWZRPT0gLS0+XG5cbmBgYHJcbmNvbG5hbWVzKG1vdmllcylcblxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY29sbmFtZXMobW92aWVzKVxuXG5gYGAifQ== -->
+<pre class="r"><code>colnames(movies)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImlkXCIgICAgICAgICAgICAgICAgICAgICAgIFxuIFsyXSBcImJ1ZGdldFwiICAgICAgICAgICAgICAgICAgIFxuIFszXSBcImdlbnJlc1wiICAgICAgICAgICAgICAgICAgIFxuIFs0XSBcImhvbWVQYWdlXCIgICAgICAgICAgICAgICAgIFxuIFs1XSBcInByb2R1Y3Rpb25Db21wYW55XCIgICAgICAgIFxuIFs2XSBcInByb2R1Y3Rpb25Db21wYW55Q291bnRyeVwiIFxuIFs3XSBcInByb2R1Y3Rpb25Db3VudHJ5XCIgICAgICAgIFxuIFs4XSBcInJldmVudWVcIiAgICAgICAgICAgICAgICAgIFxuIFs5XSBcInJ1bnRpbWVcIiAgICAgICAgICAgICAgICAgIFxuWzEwXSBcInZpZGVvXCIgICAgICAgICAgICAgICAgICAgIFxuWzExXSBcImRpcmVjdG9yXCIgICAgICAgICAgICAgICAgIFxuWzEyXSBcImFjdG9yc1wiICAgICAgICAgICAgICAgICAgIFxuWzEzXSBcImFjdG9yc1BvcHVsYXJpdHlcIiAgICAgICAgIFxuWzE0XSBcImFjdG9yc0NoYXJhY3RlclwiICAgICAgICAgIFxuWzE1XSBcIm9yaWdpbmFsVGl0bGVcIiAgICAgICAgICAgIFxuWzE2XSBcInRpdGxlXCIgICAgICAgICAgICAgICAgICAgIFxuWzE3XSBcIm9yaWdpbmFsTGFuZ3VhZ2VcIiAgICAgICAgIFxuWzE4XSBcInBvcHVsYXJpdHlcIiAgICAgICAgICAgICAgIFxuWzE5XSBcInJlbGVhc2VEYXRlXCIgICAgICAgICAgICAgIFxuWzIwXSBcInZvdGVBdmdcIiAgICAgICAgICAgICAgICAgIFxuWzIxXSBcInZvdGVDb3VudFwiICAgICAgICAgICAgICAgIFxuWzIyXSBcImdlbnJlc0Ftb3VudFwiICAgICAgICAgICAgIFxuWzIzXSBcInByb2R1Y3Rpb25Db0Ftb3VudFwiICAgICAgIFxuWzI0XSBcInByb2R1Y3Rpb25Db3VudHJpZXNBbW91bnRcIlxuWzI1XSBcImFjdG9yc0Ftb3VudFwiICAgICAgICAgICAgIFxuWzI2XSBcImNhc3RXb21lbkFtb3VudFwiICAgICAgICAgIFxuWzI3XSBcImNhc3RNZW5BbW91bnRcIiAgICAgICAgICAgIFxuWzI4XSBcInJlbGVhc2VZZWFyXCIgICAgICAgICAgICAgIFxuIn0= -->
+<pre><code> [1] &quot;id&quot;                       
+ [2] &quot;budget&quot;                   
+ [3] &quot;genres&quot;                   
+ [4] &quot;homePage&quot;                 
+ [5] &quot;productionCompany&quot;        
+ [6] &quot;productionCompanyCountry&quot; 
+ [7] &quot;productionCountry&quot;        
+ [8] &quot;revenue&quot;                  
+ [9] &quot;runtime&quot;                  
+[10] &quot;video&quot;                    
+[11] &quot;director&quot;                 
+[12] &quot;actors&quot;                   
+[13] &quot;actorsPopularity&quot;         
+[14] &quot;actorsCharacter&quot;          
+[15] &quot;originalTitle&quot;            
+[16] &quot;title&quot;                    
+[17] &quot;originalLanguage&quot;         
+[18] &quot;popularity&quot;               
+[19] &quot;releaseDate&quot;              
+[20] &quot;voteAvg&quot;                  
+[21] &quot;voteCount&quot;                
+[22] &quot;genresAmount&quot;             
+[23] &quot;productionCoAmount&quot;       
+[24] &quot;productionCountriesAmount&quot;
+[25] &quot;actorsAmount&quot;             
+[26] &quot;castWomenAmount&quot;          
+[27] &quot;castMenAmount&quot;            
+[28] &quot;releaseYear&quot;              </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="ejercicio-1" class="section level3">
+<h3>Ejercicio 1</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHViblZ0WlhKcFkyRnpJRHd0SUdNb1hDSmlkV1JuWlhSY0lpeGNJbkpsZG1WdWRXVmNJaXhjSW5KMWJuUnBiV1ZjSWl4Y0ltZGxibkpsYzBGdGIzVnVkRndpTEZ3aWNISnZaSFZqZEdsdmJrTnZRVzF2ZFc1MFhDSXNYQ0p3Y205a2RXTjBhVzl1UTI5MWJuUnlhV1Z6UVcxdmRXNTBYQ0lzWENKaFkzUnZjbk5CYlc5MWJuUmNJaXhjSW1OaGMzUlhiMjFsYmtGdGIzVnVkRndpTEZ3aVkyRnpkRTFsYmtGdGIzVnVkRndpTEZ3aWNtVnNaV0Z6WlZsbFlYSmNJaWtnSTFObGJHVmpZMmx2Ym1GeUlITnZiRzhnYm5WdHc2bHlhV05oYzF4dWJXOTJhV1Z6WDI1MWJTQThMU0J0YjNacFpYTmJMQ0J1ZFcxbGNtbGpZWE5kWEc1amIyeHVZVzFsY3lodGIzWnBaWE5mYm5WdEtWeHVZR0JnSW4wPSAtLT5cblxuYGBgclxubnVtZXJpY2FzIDwtIGMoXCJidWRnZXRcIixcInJldmVudWVcIixcInJ1bnRpbWVcIixcImdlbnJlc0Ftb3VudFwiLFwicHJvZHVjdGlvbkNvQW1vdW50XCIsXCJwcm9kdWN0aW9uQ291bnRyaWVzQW1vdW50XCIsXCJhY3RvcnNBbW91bnRcIixcImNhc3RXb21lbkFtb3VudFwiLFwiY2FzdE1lbkFtb3VudFwiLFwicmVsZWFzZVllYXJcIikgI1NlbGVjY2lvbmFyIHNvbG8gbnVtw6lyaWNhc1xubW92aWVzX251bSA8LSBtb3ZpZXNbLCBudW1lcmljYXNdXG5jb2xuYW1lcyhtb3ZpZXNfbnVtKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtZXJpY2FzIDwtIGMoXCJidWRnZXRcIixcInJldmVudWVcIixcInJ1bnRpbWVcIixcImdlbnJlc0Ftb3VudFwiLFwicHJvZHVjdGlvbkNvQW1vdW50XCIsXCJwcm9kdWN0aW9uQ291bnRyaWVzQW1vdW50XCIsXCJhY3RvcnNBbW91bnRcIixcImNhc3RXb21lbkFtb3VudFwiLFwiY2FzdE1lbkFtb3VudFwiLFwicmVsZWFzZVllYXJcIikgI1NlbGVjY2lvbmFyIHNvbG8gbnVtw6lyaWNhc1xubW92aWVzX251bSA8LSBtb3ZpZXNbLCBudW1lcmljYXNdXG5jb2xuYW1lcyhtb3ZpZXNfbnVtKVxuYGBgIn0= -->
+<pre class="r"><code>numericas &lt;- c(&quot;budget&quot;,&quot;revenue&quot;,&quot;runtime&quot;,&quot;genresAmount&quot;,&quot;productionCoAmount&quot;,&quot;productionCountriesAmount&quot;,&quot;actorsAmount&quot;,&quot;castWomenAmount&quot;,&quot;castMenAmount&quot;,&quot;releaseYear&quot;) #Seleccionar solo numéricas
+movies_num &lt;- movies[, numericas]
+colnames(movies_num)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImJ1ZGdldFwiICAgICAgICAgICAgICAgICAgIFxuIFsyXSBcInJldmVudWVcIiAgICAgICAgICAgICAgICAgIFxuIFszXSBcInJ1bnRpbWVcIiAgICAgICAgICAgICAgICAgIFxuIFs0XSBcImdlbnJlc0Ftb3VudFwiICAgICAgICAgICAgIFxuIFs1XSBcInByb2R1Y3Rpb25Db0Ftb3VudFwiICAgICAgIFxuIFs2XSBcInByb2R1Y3Rpb25Db3VudHJpZXNBbW91bnRcIlxuIFs3XSBcImFjdG9yc0Ftb3VudFwiICAgICAgICAgICAgIFxuIFs4XSBcImNhc3RXb21lbkFtb3VudFwiICAgICAgICAgIFxuIFs5XSBcImNhc3RNZW5BbW91bnRcIiAgICAgICAgICAgIFxuWzEwXSBcInJlbGVhc2VZZWFyXCIgICAgICAgICAgICAgIFxuIn0= -->
+<pre><code> [1] &quot;budget&quot;                   
+ [2] &quot;revenue&quot;                  
+ [3] &quot;runtime&quot;                  
+ [4] &quot;genresAmount&quot;             
+ [5] &quot;productionCoAmount&quot;       
+ [6] &quot;productionCountriesAmount&quot;
+ [7] &quot;actorsAmount&quot;             
+ [8] &quot;castWomenAmount&quot;          
+ [9] &quot;castMenAmount&quot;            
+[10] &quot;releaseYear&quot;              </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHViVzkyYVdWelgyTmhkQ0E4TFNCdGIzWnBaWE5iTENBaGJtRnRaWE1vYlc5MmFXVnpLU0FsYVc0bElHTW9iblZ0WlhKcFkyRnpMQ0JjSW1sa1hDSXBYU0FqVTJWc1pXTmphVzl1WVhJZ2MyOXNieUJqWVhSbFo4T3pjbWxqWVhOY2JtNWhiV1Z6S0cxdmRtbGxjMTlqWVhRcFhHNWdZR0FpZlE9PSAtLT5cblxuYGBgclxubW92aWVzX2NhdCA8LSBtb3ZpZXNbLCAhbmFtZXMobW92aWVzKSAlaW4lIGMobnVtZXJpY2FzLCBcImlkXCIpXSAjU2VsZWNjaW9uYXIgc29sbyBjYXRlZ8OzcmljYXNcbm5hbWVzKG1vdmllc19jYXQpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW92aWVzX2NhdCA8LSBtb3ZpZXNbLCAhbmFtZXMobW92aWVzKSAlaW4lIGMobnVtZXJpY2FzLCBcImlkXCIpXSAjU2VsZWNjaW9uYXIgc29sbyBjYXRlZ8OzcmljYXNcbm5hbWVzKG1vdmllc19jYXQpXG5gYGAifQ== -->
+<pre class="r"><code>movies_cat &lt;- movies[, !names(movies) %in% c(numericas, &quot;id&quot;)] #Seleccionar solo categóricas
+names(movies_cat)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImdlbnJlc1wiICAgICAgICAgICAgICAgICAgXG4gWzJdIFwiaG9tZVBhZ2VcIiAgICAgICAgICAgICAgICBcbiBbM10gXCJwcm9kdWN0aW9uQ29tcGFueVwiICAgICAgIFxuIFs0XSBcInByb2R1Y3Rpb25Db21wYW55Q291bnRyeVwiXG4gWzVdIFwicHJvZHVjdGlvbkNvdW50cnlcIiAgICAgICBcbiBbNl0gXCJ2aWRlb1wiICAgICAgICAgICAgICAgICAgIFxuIFs3XSBcImRpcmVjdG9yXCIgICAgICAgICAgICAgICAgXG4gWzhdIFwiYWN0b3JzXCIgICAgICAgICAgICAgICAgICBcbiBbOV0gXCJhY3RvcnNQb3B1bGFyaXR5XCIgICAgICAgIFxuWzEwXSBcImFjdG9yc0NoYXJhY3RlclwiICAgICAgICAgXG5bMTFdIFwib3JpZ2luYWxUaXRsZVwiICAgICAgICAgICBcblsxMl0gXCJ0aXRsZVwiICAgICAgICAgICAgICAgICAgIFxuWzEzXSBcIm9yaWdpbmFsTGFuZ3VhZ2VcIiAgICAgICAgXG5bMTRdIFwicG9wdWxhcml0eVwiICAgICAgICAgICAgICBcblsxNV0gXCJyZWxlYXNlRGF0ZVwiICAgICAgICAgICAgIFxuWzE2XSBcInZvdGVBdmdcIiAgICAgICAgICAgICAgICAgXG5bMTddIFwidm90ZUNvdW50XCIgICAgICAgICAgICAgICBcbiJ9 -->
+<pre><code> [1] &quot;genres&quot;                  
+ [2] &quot;homePage&quot;                
+ [3] &quot;productionCompany&quot;       
+ [4] &quot;productionCompanyCountry&quot;
+ [5] &quot;productionCountry&quot;       
+ [6] &quot;video&quot;                   
+ [7] &quot;director&quot;                
+ [8] &quot;actors&quot;                  
+ [9] &quot;actorsPopularity&quot;        
+[10] &quot;actorsCharacter&quot;         
+[11] &quot;originalTitle&quot;           
+[12] &quot;title&quot;                   
+[13] &quot;originalLanguage&quot;        
+[14] &quot;popularity&quot;              
+[15] &quot;releaseDate&quot;             
+[16] &quot;voteAvg&quot;                 
+[17] &quot;voteCount&quot;               </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>El conjunto de datos está formado por ’10 variables cuantitativas y
+’17 variables cualitativas.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVjM1Z0YldGeWVTaHRiM1pwWlhOZmJuVnRLVnh1WUdCZ0luMD0gLS0+XG5cbmBgYHJcbnN1bW1hcnkobW92aWVzX251bSlcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShtb3ZpZXNfbnVtKVxuYGBgIn0= -->
+<pre class="r"><code>summary(movies_num)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICBidWRnZXQgICAgICAgICAgICAgcmV2ZW51ZSAgICAgICAgIFxuIE1pbi4gICA6ICAgICAgICAwICAgTWluLiAgIDowLjAwMGUrMDAgIFxuIDFzdCBRdS46ICAgICAgICAwICAgMXN0IFF1LjowLjAwMGUrMDAgIFxuIE1lZGlhbiA6ICAgICAgICAwICAgTWVkaWFuIDowLjAwMGUrMDAgIFxuIE1lYW4gICA6ICA5NDEzMjgwICAgTWVhbiAgIDoyLjg3OWUrMDcgIFxuIDNyZCBRdS46ICAxMDAwMDAwICAgM3JkIFF1LjozLjMwNmUrMDUgIFxuIE1heC4gICA6MzgwMDAwMDAwICAgTWF4LiAgIDoyLjg0N2UrMDkgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuICAgIHJ1bnRpbWUgICAgICAgIGdlbnJlc0Ftb3VudCAgIFxuIE1pbi4gICA6ICAwLjAwICAgTWluLiAgIDogMC4wMDAgIFxuIDFzdCBRdS46IDEwLjAwICAgMXN0IFF1LjogMS4wMDAgIFxuIE1lZGlhbiA6IDg2LjAwICAgTWVkaWFuIDogMi4wMDAgIFxuIE1lYW4gICA6IDY2LjA5ICAgTWVhbiAgIDogMS45NDkgIFxuIDNyZCBRdS46MTAzLjAwICAgM3JkIFF1LjogMy4wMDAgIFxuIE1heC4gICA6NzUwLjAwICAgTWF4LiAgIDoxNi4wMDAgIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuIHByb2R1Y3Rpb25Db0Ftb3VudCBwcm9kdWN0aW9uQ291bnRyaWVzQW1vdW50XG4gTWluLiAgIDogMC4wMDAgICAgIE1pbi4gICA6ICAwLjAwICAgICAgICAgICBcbiAxc3QgUXUuOiAwLjAwMCAgICAgMXN0IFF1LjogIDEuMDAgICAgICAgICAgIFxuIE1lZGlhbiA6IDEuMDAwICAgICBNZWRpYW4gOiAgMS4wMCAgICAgICAgICAgXG4gTWVhbiAgIDogMS45NzMgICAgIE1lYW4gICA6ICAxLjIzICAgICAgICAgICBcbiAzcmQgUXUuOiAzLjAwMCAgICAgM3JkIFF1LjogIDEuMDAgICAgICAgICAgIFxuIE1heC4gICA6ODkuMDAwICAgICBNYXguICAgOjE1NS4wMCAgICAgICAgICAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcbiAgYWN0b3JzQW1vdW50ICAgIGNhc3RXb21lbkFtb3VudCBcbiBNaW4uICAgOiAgICAgMCAgIE1pbi4gICA6ICAgICAwICBcbiAxc3QgUXUuOiAgICAgMyAgIDFzdCBRdS46ICAgICAwICBcbiBNZWRpYW4gOiAgICAgOSAgIE1lZGlhbiA6ICAgICAyICBcbiBNZWFuICAgOiAgMTA4MiAgIE1lYW4gICA6ICAzNTE3ICBcbiAzcmQgUXUuOiAgICAyMSAgIDNyZCBRdS46ICAgICA2ICBcbiBNYXguICAgOjkxOTU5MCAgIE1heC4gICA6OTIyMTYyICBcbiAgICAgICAgICAgICAgICAgIE5BJ3MgICA6MzcgICAgICBcbiBjYXN0TWVuQW1vdW50ICAgICByZWxlYXNlWWVhciAgXG4gTWluLiAgIDogICAgIDAgICBNaW4uICAgOjE5MDIgIFxuIDFzdCBRdS46ICAgICAwICAgMXN0IFF1LjoyMDEzICBcbiBNZWRpYW4gOiAgICAgMyAgIE1lZGlhbiA6MjAyMSAgXG4gTWVhbiAgIDogIDgyMjQgICBNZWFuICAgOjIwMTcgIFxuIDNyZCBRdS46ICAgIDEyICAgM3JkIFF1LjoyMDI1ICBcbiBNYXguICAgOjkyMjAxNyAgIE1heC4gICA6MjAyNiAgXG4gTkEncyAgIDoxNjIgICAgICBOQSdzICAgOjIgICAgIFxuIn0= -->
+<pre><code>     budget             revenue         
+ Min.   :        0   Min.   :0.000e+00  
+ 1st Qu.:        0   1st Qu.:0.000e+00  
+ Median :        0   Median :0.000e+00  
+ Mean   :  9413280   Mean   :2.879e+07  
+ 3rd Qu.:  1000000   3rd Qu.:3.306e+05  
+ Max.   :380000000   Max.   :2.847e+09  
+                                        
+    runtime        genresAmount   
+ Min.   :  0.00   Min.   : 0.000  
+ 1st Qu.: 10.00   1st Qu.: 1.000  
+ Median : 86.00   Median : 2.000  
+ Mean   : 66.09   Mean   : 1.949  
+ 3rd Qu.:103.00   3rd Qu.: 3.000  
+ Max.   :750.00   Max.   :16.000  
+                                  
+ productionCoAmount productionCountriesAmount
+ Min.   : 0.000     Min.   :  0.00           
+ 1st Qu.: 0.000     1st Qu.:  1.00           
+ Median : 1.000     Median :  1.00           
+ Mean   : 1.973     Mean   :  1.23           
+ 3rd Qu.: 3.000     3rd Qu.:  1.00           
+ Max.   :89.000     Max.   :155.00           
+                                             
+  actorsAmount    castWomenAmount 
+ Min.   :     0   Min.   :     0  
+ 1st Qu.:     3   1st Qu.:     0  
+ Median :     9   Median :     2  
+ Mean   :  1082   Mean   :  3517  
+ 3rd Qu.:    21   3rd Qu.:     6  
+ Max.   :919590   Max.   :922162  
+                  NA&#39;s   :37      
+ castMenAmount     releaseYear  
+ Min.   :     0   Min.   :1902  
+ 1st Qu.:     0   1st Qu.:2013  
+ Median :     3   Median :2021  
+ Mean   :  8224   Mean   :2017  
+ 3rd Qu.:    12   3rd Qu.:2025  
+ Max.   :922017   Max.   :2026  
+ NA&#39;s   :162      NA&#39;s   :2     </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpHSjFaR2RsZENsY2JtSnZlSEJzYjNRb2JXOTJhV1Z6WDI1MWJTbGNibXhwYkd4cFpTNTBaWE4wS0cxdmRtbGxjMTl1ZFcwa1luVmtaMlYwS1Z4dVlHQmdJbjA9IC0tPlxuXG5gYGByXG5oaXN0KG1vdmllc19udW0kYnVkZ2V0KVxuYm94cGxvdChtb3ZpZXNfbnVtKVxubGlsbGllLnRlc3QobW92aWVzX251bSRidWRnZXQpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJGJ1ZGdldClcbmJveHBsb3QobW92aWVzX251bSlcbmxpbGxpZS50ZXN0KG1vdmllc19udW0kYnVkZ2V0KVxuYGBgIn0= -->
+<pre class="r"><code>hist(movies_num$budget)
+boxplot(movies_num)
+lillie.test(movies_num$budget)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>La variable “budget” no sigue una distribución normal.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpISmxkbVZ1ZFdVcFhHNWliM2h3Ykc5MEtHMXZkbWxsYzE5dWRXMGtjbVYyWlc1MVpTbGNibXhwYkd4cFpTNTBaWE4wS0cxdmRtbGxjMTl1ZFcwa2NtVjJaVzUxWlNsY2JtQmdZQ0o5IC0tPlxuXG5gYGByXG5oaXN0KG1vdmllc19udW0kcmV2ZW51ZSlcbmJveHBsb3QobW92aWVzX251bSRyZXZlbnVlKVxubGlsbGllLnRlc3QobW92aWVzX251bSRyZXZlbnVlKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJHJldmVudWUpXG5ib3hwbG90KG1vdmllc19udW0kcmV2ZW51ZSlcbmxpbGxpZS50ZXN0KG1vdmllc19udW0kcmV2ZW51ZSlcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$revenue)
+boxplot(movies_num$revenue)
+lillie.test(movies_num$revenue)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpISjFiblJwYldVcFhHNWliM2h3Ykc5MEtHMXZkbWxsYzE5dWRXMGtjblZ1ZEdsdFpTbGNibXhwYkd4cFpTNTBaWE4wS0cxdmRtbGxjMTl1ZFcwa2NuVnVkR2x0WlNsY2JtQmdZQ0o5IC0tPlxuXG5gYGByXG5oaXN0KG1vdmllc19udW0kcnVudGltZSlcbmJveHBsb3QobW92aWVzX251bSRydW50aW1lKVxubGlsbGllLnRlc3QobW92aWVzX251bSRydW50aW1lKVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJHJ1bnRpbWUpXG5ib3hwbG90KG1vdmllc19udW0kcnVudGltZSlcbmxpbGxpZS50ZXN0KG1vdmllc19udW0kcnVudGltZSlcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$runtime)
+boxplot(movies_num$runtime)
+lillie.test(movies_num$runtime)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpHZGxibkpsYzBGdGIzVnVkQ2xjYm1KdmVIQnNiM1FvYlc5MmFXVnpYMjUxYlNSblpXNXlaWE5CYlc5MWJuUXBYRzVzYVd4c2FXVXVkR1Z6ZENodGIzWnBaWE5mYm5WdEpHZGxibkpsYzBGdGIzVnVkQ2xjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbmhpc3QobW92aWVzX251bSRnZW5yZXNBbW91bnQpXG5ib3hwbG90KG1vdmllc19udW0kZ2VucmVzQW1vdW50KVxubGlsbGllLnRlc3QobW92aWVzX251bSRnZW5yZXNBbW91bnQpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJGdlbnJlc0Ftb3VudClcbmJveHBsb3QobW92aWVzX251bSRnZW5yZXNBbW91bnQpXG5saWxsaWUudGVzdChtb3ZpZXNfbnVtJGdlbnJlc0Ftb3VudClcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$genresAmount)
+boxplot(movies_num$genresAmount)
+lillie.test(movies_num$genresAmount)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpIQnliMlIxWTNScGIyNURiMEZ0YjNWdWRDbGNibUp2ZUhCc2IzUW9iVzkyYVdWelgyNTFiU1J3Y205a2RXTjBhVzl1UTI5QmJXOTFiblFwWEc1c2FXeHNhV1V1ZEdWemRDaHRiM1pwWlhOZmJuVnRKSEJ5YjJSMVkzUnBiMjVEYjBGdGIzVnVkQ2xjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbmhpc3QobW92aWVzX251bSRwcm9kdWN0aW9uQ29BbW91bnQpXG5ib3hwbG90KG1vdmllc19udW0kcHJvZHVjdGlvbkNvQW1vdW50KVxubGlsbGllLnRlc3QobW92aWVzX251bSRwcm9kdWN0aW9uQ29BbW91bnQpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJHByb2R1Y3Rpb25Db0Ftb3VudClcbmJveHBsb3QobW92aWVzX251bSRwcm9kdWN0aW9uQ29BbW91bnQpXG5saWxsaWUudGVzdChtb3ZpZXNfbnVtJHByb2R1Y3Rpb25Db0Ftb3VudClcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$productionCoAmount)
+boxplot(movies_num$productionCoAmount)
+lillie.test(movies_num$productionCoAmount)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpIQnliMlIxWTNScGIyNURiM1Z1ZEhKcFpYTkJiVzkxYm5RcFhHNWliM2h3Ykc5MEtHMXZkbWxsYzE5dWRXMGtjSEp2WkhWamRHbHZia052ZFc1MGNtbGxjMEZ0YjNWdWRDbGNibXhwYkd4cFpTNTBaWE4wS0cxdmRtbGxjMTl1ZFcwa2NISnZaSFZqZEdsdmJrTnZkVzUwY21sbGMwRnRiM1Z1ZENsY2JtQmdZQ0o5IC0tPlxuXG5gYGByXG5oaXN0KG1vdmllc19udW0kcHJvZHVjdGlvbkNvdW50cmllc0Ftb3VudClcbmJveHBsb3QobW92aWVzX251bSRwcm9kdWN0aW9uQ291bnRyaWVzQW1vdW50KVxubGlsbGllLnRlc3QobW92aWVzX251bSRwcm9kdWN0aW9uQ291bnRyaWVzQW1vdW50KVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJHByb2R1Y3Rpb25Db3VudHJpZXNBbW91bnQpXG5ib3hwbG90KG1vdmllc19udW0kcHJvZHVjdGlvbkNvdW50cmllc0Ftb3VudClcbmxpbGxpZS50ZXN0KG1vdmllc19udW0kcHJvZHVjdGlvbkNvdW50cmllc0Ftb3VudClcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$productionCountriesAmount)
+boxplot(movies_num$productionCountriesAmount)
+lillie.test(movies_num$productionCountriesAmount)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpHRmpkRzl5YzBGdGIzVnVkQ2xjYm1KdmVIQnNiM1FvYlc5MmFXVnpYMjUxYlNSaFkzUnZjbk5CYlc5MWJuUXBYRzVzYVd4c2FXVXVkR1Z6ZENodGIzWnBaWE5mYm5WdEpHRmpkRzl5YzBGdGIzVnVkQ2xjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbmhpc3QobW92aWVzX251bSRhY3RvcnNBbW91bnQpXG5ib3hwbG90KG1vdmllc19udW0kYWN0b3JzQW1vdW50KVxubGlsbGllLnRlc3QobW92aWVzX251bSRhY3RvcnNBbW91bnQpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJGFjdG9yc0Ftb3VudClcbmJveHBsb3QobW92aWVzX251bSRhY3RvcnNBbW91bnQpXG5saWxsaWUudGVzdChtb3ZpZXNfbnVtJGFjdG9yc0Ftb3VudClcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$actorsAmount)
+boxplot(movies_num$actorsAmount)
+lillie.test(movies_num$actorsAmount)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpHTmhjM1JYYjIxbGJrRnRiM1Z1ZENsY2JtSnZlSEJzYjNRb2JXOTJhV1Z6WDI1MWJTUmpZWE4wVjI5dFpXNUJiVzkxYm5RcFhHNXNhV3hzYVdVdWRHVnpkQ2h0YjNacFpYTmZiblZ0SkdOaGMzUlhiMjFsYmtGdGIzVnVkQ2xjYm1CZ1lDSjkgLS0+XG5cbmBgYHJcbmhpc3QobW92aWVzX251bSRjYXN0V29tZW5BbW91bnQpXG5ib3hwbG90KG1vdmllc19udW0kY2FzdFdvbWVuQW1vdW50KVxubGlsbGllLnRlc3QobW92aWVzX251bSRjYXN0V29tZW5BbW91bnQpXG5gYGBcblxuPCEtLSBybmItc291cmNlLWVuZCAtLT5cbiJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJGNhc3RXb21lbkFtb3VudClcbmJveHBsb3QobW92aWVzX251bSRjYXN0V29tZW5BbW91bnQpXG5saWxsaWUudGVzdChtb3ZpZXNfbnVtJGNhc3RXb21lbkFtb3VudClcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$castWomenAmount)
+boxplot(movies_num$castWomenAmount)
+lillie.test(movies_num$castWomenAmount)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpHTmhjM1JOWlc1QmJXOTFiblFwWEc1aWIzaHdiRzkwS0cxdmRtbGxjMTl1ZFcwa1kyRnpkRTFsYmtGdGIzVnVkQ2xjYm14cGJHeHBaUzUwWlhOMEtHMXZkbWxsYzE5dWRXMGtZMkZ6ZEUxbGJrRnRiM1Z1ZENsY2JtQmdZQ0o5IC0tPlxuXG5gYGByXG5oaXN0KG1vdmllc19udW0kY2FzdE1lbkFtb3VudClcbmJveHBsb3QobW92aWVzX251bSRjYXN0TWVuQW1vdW50KVxubGlsbGllLnRlc3QobW92aWVzX251bSRjYXN0TWVuQW1vdW50KVxuYGBgXG5cbjwhLS0gcm5iLXNvdXJjZS1lbmQgLS0+XG4ifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJGNhc3RNZW5BbW91bnQpXG5ib3hwbG90KG1vdmllc19udW0kY2FzdE1lbkFtb3VudClcbmxpbGxpZS50ZXN0KG1vdmllc19udW0kY2FzdE1lbkFtb3VudClcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$castMenAmount)
+boxplot(movies_num$castMenAmount)
+lillie.test(movies_num$castMenAmount)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG48IS0tIHJuYi1zb3VyY2UtYmVnaW4gZXlKa1lYUmhJam9pWUdCZ2NseHVhR2x6ZENodGIzWnBaWE5mYm5WdEpISmxiR1ZoYzJWWlpXRnlLVnh1WW05NGNHeHZkQ2h0YjNacFpYTmZiblZ0SkhKbGJHVmhjMlZaWldGeUtWeHViR2xzYkdsbExuUmxjM1FvYlc5MmFXVnpYMjUxYlNSeVpXeGxZWE5sV1dWaGNpbGNibUJnWUNKOSAtLT5cblxuYGBgclxuaGlzdChtb3ZpZXNfbnVtJHJlbGVhc2VZZWFyKVxuYm94cGxvdChtb3ZpZXNfbnVtJHJlbGVhc2VZZWFyKVxubGlsbGllLnRlc3QobW92aWVzX251bSRyZWxlYXNlWWVhcilcbmBgYFxuXG48IS0tIHJuYi1zb3VyY2UtZW5kIC0tPlxuIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlzdChtb3ZpZXNfbnVtJHJlbGVhc2VZZWFyKVxuYm94cGxvdChtb3ZpZXNfbnVtJHJlbGVhc2VZZWFyKVxubGlsbGllLnRlc3QobW92aWVzX251bSRyZWxlYXNlWWVhcilcbmBgYCJ9 -->
+<pre class="r"><code>hist(movies_num$releaseYear)
+boxplot(movies_num$releaseYear)
+lillie.test(movies_num$releaseYear)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxhYm9yYXRvcmlvIDEiDQphdXRvcjogIkphdmllciBDaMOhdmV6LCBHZW5zZXIgQ2F0YWzDoW4iDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0KYGBgDQoNCg0KYGBge3J9DQptb3ZpZXM8LSByZWFkLmNzdigiLi4vZGF0b3MvbW92aWVzXzIwMjYuY3N2IikNCmBgYA0KDQpgYGB7ciBFamVyY2ljaW8gMX0NCg0KYGBgDQoNCg0KYGBge3IgRWplcmNpY2lvIDJ9DQoNCmBgYA0KDQoNCmBgYHtyIEVqZXJjaWNpbyAzfQ0KDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkxhYm9yYXRvcmlvIDEiDQphdXRvcjogIkphdmllciBDaMOhdmV6LCBHZW5zZXIgQ2F0YWzDoW4iDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0KYGBgDQoNCmBgYHtyIHBhcXVldGVzfQ0KbGlicmFyeShnZ3Bsb3QyKQ0KbGlicmFyeShub3J0ZXN0KQ0KYGBgDQoNCg0KDQpgYGB7cn0NCm1vdmllczwtIHJlYWQuY3N2KCIuLi9kYXRvcy9tb3ZpZXNfMjAyNi5jc3YiKQ0KY29sbmFtZXMobW92aWVzKQ0KYGBgDQoNCg0KIyMjIEVqZXJjaWNpbyAxDQoNCmBgYHtyIHZhcmlhYmxlcyBudW3DqXJpY2FzfQ0KbnVtZXJpY2FzIDwtIGMoImJ1ZGdldCIsInJldmVudWUiLCJydW50aW1lIiwiZ2VucmVzQW1vdW50IiwicHJvZHVjdGlvbkNvQW1vdW50IiwicHJvZHVjdGlvbkNvdW50cmllc0Ftb3VudCIsImFjdG9yc0Ftb3VudCIsImNhc3RXb21lbkFtb3VudCIsImNhc3RNZW5BbW91bnQiLCJyZWxlYXNlWWVhciIpICNTZWxlY2Npb25hciBzb2xvIG51bcOpcmljYXMNCm1vdmllc19udW0gPC0gbW92aWVzWywgbnVtZXJpY2FzXQ0KY29sbmFtZXMobW92aWVzX251bSkNCmBgYA0KYGBge3IgdmFyaWFibGVzIGNhdGVnw7NyaWNhc30NCm1vdmllc19jYXQgPC0gbW92aWVzWywgIW5hbWVzKG1vdmllcykgJWluJSBjKG51bWVyaWNhcywgImlkIildICNTZWxlY2Npb25hciBzb2xvIGNhdGVnw7NyaWNhcw0KbmFtZXMobW92aWVzX2NhdCkNCmBgYA0KRWwgY29uanVudG8gZGUgZGF0b3MgZXN0w6EgZm9ybWFkbyBwb3IgJ2ByIG5jb2wobW92aWVzX251bSlgIHZhcmlhYmxlcyBjdWFudGl0YXRpdmFzIHkgJ2ByIG5jb2wobW92aWVzX2NhdClgIHZhcmlhYmxlcyBjdWFsaXRhdGl2YXMuDQoNCmBgYHtyIFJlc3VtZW4gZGUgY29uanVudG8gZGUgZGF0b3MgbnVtw6lyaWNvc30NCnN1bW1hcnkobW92aWVzX251bSkNCmBgYA0KDQpgYGB7ciBub3JtYWxpZGFkIGRlIHZhcmlhYmxlcyBjdWFudGl0YXRpdmFzfQ0KaGlzdChtb3ZpZXNfbnVtJGJ1ZGdldCkNCmJveHBsb3QobW92aWVzX251bSkNCmxpbGxpZS50ZXN0KG1vdmllc19udW0kYnVkZ2V0KQ0KYGBgDQpMYSB2YXJpYWJsZSAiYnVkZ2V0IiBubyBzaWd1ZSB1bmEgZGlzdHJpYnVjacOzbiBub3JtYWwuDQoNCmBgYHtyfQ0KaGlzdChtb3ZpZXNfbnVtJHJldmVudWUpDQpib3hwbG90KG1vdmllc19udW0kcmV2ZW51ZSkNCmxpbGxpZS50ZXN0KG1vdmllc19udW0kcmV2ZW51ZSkNCmBgYA0KDQpgYGB7cn0NCmhpc3QobW92aWVzX251bSRydW50aW1lKQ0KYm94cGxvdChtb3ZpZXNfbnVtJHJ1bnRpbWUpDQpsaWxsaWUudGVzdChtb3ZpZXNfbnVtJHJ1bnRpbWUpDQpgYGANCg0KYGBge3J9DQpoaXN0KG1vdmllc19udW0kZ2VucmVzQW1vdW50KQ0KYm94cGxvdChtb3ZpZXNfbnVtJGdlbnJlc0Ftb3VudCkNCmxpbGxpZS50ZXN0KG1vdmllc19udW0kZ2VucmVzQW1vdW50KQ0KYGBgDQoNCmBgYHtyfQ0KaGlzdChtb3ZpZXNfbnVtJHByb2R1Y3Rpb25Db0Ftb3VudCkNCmJveHBsb3QobW92aWVzX251bSRwcm9kdWN0aW9uQ29BbW91bnQpDQpsaWxsaWUudGVzdChtb3ZpZXNfbnVtJHByb2R1Y3Rpb25Db0Ftb3VudCkNCmBgYA0KDQpgYGB7cn0NCmhpc3QobW92aWVzX251bSRwcm9kdWN0aW9uQ291bnRyaWVzQW1vdW50KQ0KYm94cGxvdChtb3ZpZXNfbnVtJHByb2R1Y3Rpb25Db3VudHJpZXNBbW91bnQpDQpsaWxsaWUudGVzdChtb3ZpZXNfbnVtJHByb2R1Y3Rpb25Db3VudHJpZXNBbW91bnQpDQpgYGANCg0KYGBge3J9DQpoaXN0KG1vdmllc19udW0kYWN0b3JzQW1vdW50KQ0KYm94cGxvdChtb3ZpZXNfbnVtJGFjdG9yc0Ftb3VudCkNCmxpbGxpZS50ZXN0KG1vdmllc19udW0kYWN0b3JzQW1vdW50KQ0KYGBgDQoNCmBgYHtyfQ0KaGlzdChtb3ZpZXNfbnVtJGNhc3RXb21lbkFtb3VudCkNCmJveHBsb3QobW92aWVzX251bSRjYXN0V29tZW5BbW91bnQpDQpsaWxsaWUudGVzdChtb3ZpZXNfbnVtJGNhc3RXb21lbkFtb3VudCkNCmBgYA0KDQpgYGB7cn0NCmhpc3QobW92aWVzX251bSRjYXN0TWVuQW1vdW50KQ0KYm94cGxvdChtb3ZpZXNfbnVtJGNhc3RNZW5BbW91bnQpDQpsaWxsaWUudGVzdChtb3ZpZXNfbnVtJGNhc3RNZW5BbW91bnQpDQpgYGANCg0KYGBge3J9DQpoaXN0KG1vdmllc19udW0kcmVsZWFzZVllYXIpDQpib3hwbG90KG1vdmllc19udW0kcmVsZWFzZVllYXIpDQpsaWxsaWUudGVzdChtb3ZpZXNfbnVtJHJlbGVhc2VZZWFyKQ0KYGBgDQoNCg0K</div>
 
 
 
