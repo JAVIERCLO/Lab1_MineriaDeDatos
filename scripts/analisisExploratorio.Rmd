@@ -338,3 +338,145 @@ mejores_reales <- movies_filtradas[order(movies_filtradas$voteAvg, decreasing = 
 
 print(head(mejores_reales, 20))
 ```
+
+### Ejercicio 4.11
+```{r}
+df_br <- movies[movies$budget > 0 & movies$revenue > 0, ]
+summary(df_br$budget)
+summary(df_br$revenue)
+cor(df_br$budget, df_br$revenue)
+plot(df_br$budget, df_br$revenue,
+     main = "Presupuesto vs Ingresos",
+     xlab = "Presupuesto",
+     ylab = "Ingresos",
+     pch = 16)
+```
+
+### Ejercicio 4.12
+```{r}
+movies$releaseMonth <- as.numeric(substr(movies$releaseDate, 6, 7))
+mean(movies$revenue, na.rm = TRUE)
+tapply(movies$revenue, movies$releaseMonth, mean, na.rm = TRUE)
+boxplot(revenue ~ releaseMonth,
+        data = movies,
+        main = "Ingresos por mes de lanzamiento",
+        xlab = "Mes",
+        ylab = "Ingresos")
+```
+
+### Ejercicio4.13
+```{r}
+mean(movies$revenue, na.rm = TRUE)
+tapply(movies$revenue, movies$releaseMonth, mean, na.rm = TRUE)
+tapply(movies$id, movies$releaseMonth, length)
+boxplot(revenue ~ releaseMonth,
+        data = movies,
+        main = "Distribución de ingresos por mes",
+        xlab = "Mes",
+        ylab = "Ingresos")
+```
+
+### Ejercicio 4.14
+```{r}
+df_votes <- movies[movies$voteAvg > 0 & movies$revenue > 0, ]
+summary(df_votes$voteAvg)
+summary(df_votes$revenue)
+cor(df_votes$voteAvg, df_votes$revenue)
+plot(df_votes$voteAvg, df_votes$revenue,
+     main = "Calificación promedio vs Ingresos",
+     xlab = "Calificación promedio",
+     ylab = "Ingresos",
+     pch = 16)
+
+```
+
+### Ejercicio 4.15
+```{r}
+tapply(movies$revenue, movies$video, mean, na.rm = TRUE)
+boxplot(revenue ~ video,
+        data = movies,
+        main = "Ingresos según video promocional",
+        xlab = "Tiene video",
+        ylab = "Ingresos")
+movies$hasHomepage <- ifelse(movies$homePage == "" | is.na(movies$homePage),"No", "Si")
+
+tapply(movies$revenue, movies$hasHomepage, mean, na.rm = TRUE)
+boxplot(revenue ~ hasHomepage,
+        data = movies,
+        main = "Ingresos según página oficial",
+        xlab = "Página oficial",
+        ylab = "Ingresos")
+
+```
+
+### Ejercicio 4.16
+```{r}
+df_cast <- movies[movies$actorsPopularity > 0 & movies$revenue > 0, ]
+df_cast$actorsPopularity <- as.numeric(df_cast$actorsPopularity)
+df_cast <- df_cast[!is.na(df_cast$actorsPopularity), ]
+
+summary(df_cast$actorsPopularity)
+summary(df_cast$revenue)
+cor(df_cast$actorsPopularity, df_cast$revenue)
+plot(df_cast$actorsPopularity, df_cast$revenue,
+     main = "Popularidad del elenco vs Ingresos",
+     xlab = "Popularidad del elenco",
+     ylab = "Ingresos",
+     pch = 16)
+
+```
+
+### Ejercicio 5 (extra)
+¿La duración de las películas influye en los ingresos obtenidos?
+```{r}
+df_runtime <- movies[movies$runtime > 0 & movies$revenue > 0, ]
+summary(df_runtime$runtime)
+summary(df_runtime$revenue)
+cor(df_runtime$runtime, df_runtime$revenue)
+plot(df_runtime$runtime, df_runtime$revenue,
+     main = "Duración vs Ingresos",
+     xlab = "Duración (minutos)",
+     ylab = "Ingresos",
+     pch = 16)
+```
+¿Las películas con más géneros generan más ingresos?
+```{r}
+df_genres <- movies[movies$genresAmount > 0 & movies$revenue > 0, ]
+summary(df_genres$genresAmount)
+boxplot(revenue ~ genresAmount,
+        data = df_genres,
+        main = "Ingresos según cantidad de géneros",
+        xlab = "Cantidad de géneros",
+        ylab = "Ingresos")
+```
+¿La cantidad de compañías productoras influye en los ingresos?
+```{r}
+df_prod <- movies[movies$productionCoAmount > 0 & movies$revenue > 0, ]
+summary(df_prod$productionCoAmount)
+boxplot(revenue ~ productionCoAmount,
+        data = df_prod,
+        main = "Ingresos según compañías productoras",
+        xlab = "Cantidad de compañías",
+        ylab = "Ingresos")
+```
+¿El número de países de producción está relacionado con el éxito comercial?
+```{r}
+df_countries <- movies[movies$productionCountriesAmount > 0 & movies$revenue > 0, ]
+summary(df_countries$productionCountriesAmount)
+plot(df_countries$productionCountriesAmount, df_countries$revenue,
+     main = "Países de producción vs Ingresos",
+     xlab = "Cantidad de países de producción",
+     ylab = "Ingresos",
+     pch = 16)
+```
+¿Las películas más populares reciben más votos?
+```{r}
+df_countries <- movies[movies$productionCountriesAmount > 0 & movies$revenue > 0, ]
+summary(df_countries$productionCountriesAmount)
+plot(df_countries$productionCountriesAmount, df_countries$revenue,
+     main = "Países de producción vs Ingresos",
+     xlab = "Cantidad de países de producción",
+     ylab = "Ingresos",
+     pch = 16)
+```
+
