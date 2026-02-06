@@ -1,9 +1,8 @@
 ---
 title: "Laboratorio 1"
-autor: "Javier Chávez, Genser Catalán"
+autor: "Javier Chávez, Genser Catalán, Samuel Mejía"
 output: html_notebook
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -14,13 +13,10 @@ library(ggplot2)
 library(nortest)
 ```
 
-
-
 ```{r}
 movies<- read.csv("../datos/movies_2026.csv")
 colnames(movies)
 ```
-
 
 ### Ejercicio 1
 
@@ -30,10 +26,12 @@ numericas <- c("budget","revenue","runtime","genresAmount","productionCoAmount",
 movies_num <- movies[, numericas]
 colnames(movies_num)
 ```
+
 ```{r variables categóricas}
 movies_cat <- movies[, !names(movies) %in% c(numericas, "id")] #Seleccionar solo categóricas
 names(movies_cat)
 ```
+
 El conjunto de datos está formado por '`r ncol(movies_num)` variables cuantitativas y '`r ncol(movies_cat)` variables cualitativas.
 
 ```{r Resumen de conjunto de datos numéricos}
@@ -41,14 +39,17 @@ summary(movies_num)
 ```
 
 ### Ejercicio 2
+
 ## Este ejercicio se realizo en una tabla en el documento de entrega del laboratorio.
 
 ### Ejercicio 3
+
 ```{r normalidad de variables cuantitativas}
 hist(movies_num$budget)
 boxplot(movies_num$budget)
 lillie.test(movies_num$budget)
 ```
+
 La variable "budget" no sigue una distribución normal.
 
 ```{r}
@@ -123,8 +124,6 @@ boxplot(movies_num$voteAvg)
 lillie.test(movies_num$voteAvg)
 ```
 
-
-
 ```{r}
 table(movies$originalLanguage)
 table(movies$video)
@@ -137,28 +136,29 @@ top_budget <- movies[order(movies$budget, decreasing = TRUE), c("originalTitle",
 head(top_budget, 10)
 ```
 
-### Ejercicio 4.2 
+### Ejercicio 4.2
+
 ```{r}
 top_revenue <- movies[order(movies$revenue, decreasing = TRUE), c("originalTitle", "revenue")]
 head(top_revenue, 10)
 ```
 
+### Ejercicio 4.3
 
-### Ejercicio 4.3 
 ```{r}
 mas_votos <- movies[which.max(movies$voteCount), c("originalTitle", "voteCount")]
 print(mas_votos)
 ```
 
-
 ### Ejercicio 4.4
+
 ```{r}
 peor_pelicula <- movies[which.min(movies$voteAvg), c("originalTitle", "voteAvg")]
 print(peor_pelicula)
 ```
 
-
 ### Ejercicio 4.5
+
 ```{r}
 #¿Cuántas películas se hicieron en cada año?
 peliculas_por_anio <- table(movies$releaseYear)
@@ -183,3 +183,158 @@ ggplot(df_peliculas_anio, aes(x = AnioNum, y = Cantidad)) +
   theme_minimal()
 ```
 
+# Ejericio 4.6
+
+```{r}
+
+
+movies$mainGenre <- sapply(strsplit(as.character(movies$genres), "\\|"), "[", 1)
+
+
+# Género de las 20 más recientes 
+movies$releaseDate <- as.Date(movies$releaseDate)
+top_20_recientes <- head(movies[order(movies$releaseDate, decreasing = TRUE), ], 20)
+
+print("--- Frecuencia de géneros en las 20 películas más recientes ---")
+print(table(top_20_recientes$mainGenre))
+# El que tenga el número más alto es la respuesta.
+
+
+# Género predominante en todo el dataset y Gráfico 
+conteo_generos <- sort(table(movies$mainGenre), decreasing = TRUE)
+df_generos <- as.data.frame(conteo_generos)
+colnames(df_generos) <- c("Genero", "Frecuencia")
+
+# Gráfico de barras
+library(ggplot2)
+ggplot(df_generos, aes(x = reorder(Genero, -Frecuencia), y = Frecuencia)) +
+  geom_bar(stat = "identity", fill = "darkcyan") +
+  theme_minimal() +
+  labs(title = "Géneros Predominantes en el Dataset", 
+       x = "Género Principal", 
+       y = "Cantidad de Películas") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Rota los nombres para leerlos mejor
+
+
+# Género de las películas más largas 
+top_20_largas <- head(movies[order(movies$runtime, decreasing = TRUE), ], 20)
+
+print("--- Géneros principales en las 20 películas más largas ---")
+print(table(top_20_largas$mainGenre))
+```
+
+#Ejercicio 4.7
+```{r}
+movies$mainGenre <- sapply(strsplit(as.character(movies$genres), "\\|"), "[", 1)
+
+
+ganancias_por_genero <- aggregate(revenue ~ mainGenre, data = movies, FUN = sum)
+
+
+ganancias_ordenadas <- ganancias_por_genero[order(ganancias_por_genero$revenue, decreasing = TRUE), ]
+
+print("--- Géneros con mayores ganancias totales ---")
+print(head(ganancias_ordenadas, 10))
+
+
+library(ggplot2)
+
+ggplot(ganancias_ordenadas, aes(x = reorder(mainGenre, -revenue), y = revenue)) +
+  geom_bar(stat = "identity", fill = "forestgreen") +
+  scale_y_continuous(labels = scales::comma) + # Pone comas en los números grandes
+  labs(title = "Ganancias Totales (Revenue) por Género Principal",
+       x = "Género",
+       y = "Dinero Recaudado ($)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Inclina los textos para leerlos bien
+```
+
+#Ejericio 4.8
+```{r}
+# ¿Influye la cantidad de actores en los ingresos? 
+correlacion_actores_ingresos <- cor(movies$actorsAmount, movies$revenue, use = "complete.obs")
+
+print(paste("Correlación entre cantidad de actores e ingresos:", round(correlacion_actores_ingresos, 3)))
+
+library(ggplot2)
+ggplot(movies, aes(x = actorsAmount, y = revenue)) +
+  geom_point(alpha = 0.3, color = "darkblue") +
+  geom_smooth(method = "lm", color = "red") + # Línea de tendencia
+  labs(title = "¿Influye la cantidad de actores en los ingresos?",
+       subtitle = paste("Correlación:", round(correlacion_actores_ingresos, 3)),
+       x = "Cantidad de Actores",
+       y = "Ingresos (Revenue)") +
+  theme_minimal()
+
+
+# ¿Se han hecho películas con más actores en los últimos años? 
+actores_por_anio <- aggregate(actorsAmount ~ releaseYear, data = movies, FUN = mean)
+
+ggplot(actores_por_anio, aes(x = releaseYear, y = actorsAmount)) +
+  geom_line(color = "purple", size = 1) +
+  geom_point() +
+  labs(title = "Evolución de la Cantidad Promedio de Actores por Año",
+       x = "Año de Lanzamiento",
+       y = "Promedio de Actores por Película") +
+  theme_minimal()
+```
+
+#Ejercicio 4.9
+```{r}
+# --- Análisis: Influencia de género en el reparto vs Popularidad e Ingresos ---
+
+cor_mujeres_rev <- cor(movies$castWomenAmount, movies$revenue, use = "complete.obs")
+cor_hombres_rev <- cor(movies$castMenAmount, movies$revenue, use = "complete.obs")
+
+cor_mujeres_pop <- cor(movies$castWomenAmount, movies$popularity, use = "complete.obs")
+cor_hombres_pop <- cor(movies$castMenAmount, movies$popularity, use = "complete.obs")
+
+
+print("--- Correlación con INGRESOS (Revenue) ---")
+print(paste("Mujeres:", round(cor_mujeres_rev, 3)))
+print(paste("Hombres:", round(cor_hombres_rev, 3)))
+
+print("--- Correlación con POPULARIDAD ---")
+print(paste("Mujeres:", round(cor_mujeres_pop, 3)))
+print(paste("Hombres:", round(cor_hombres_pop, 3)))
+
+
+
+library(ggplot2)
+
+# Gráfico: Mujeres vs Ingresos
+g1 <- ggplot(movies, aes(x = castWomenAmount, y = revenue)) +
+  geom_point(alpha = 0.3, color = "purple") +
+  geom_smooth(method = "lm", color = "black") + # Línea de tendencia
+  labs(title = "Impacto de Cantidad de Actrices en Ingresos",
+       subtitle = paste("Correlación:", round(cor_mujeres_rev, 3)),
+       x = "Cantidad de Mujeres en el Reparto",
+       y = "Ingresos ($)") +
+  theme_minimal()
+
+# Gráfico: Hombres vs Ingresos
+g2 <- ggplot(movies, aes(x = castMenAmount, y = revenue)) +
+  geom_point(alpha = 0.3, color = "blue") +
+  geom_smooth(method = "lm", color = "black") + # Línea de tendencia
+  labs(title = "Impacto de Cantidad de Actores en Ingresos",
+       subtitle = paste("Correlación:", round(cor_hombres_rev, 3)),
+       x = "Cantidad de Hombres en el Reparto",
+       y = "Ingresos ($)") +
+  theme_minimal()
+
+print(g1)
+print(g2)
+```
+
+#Ejericio 4.10
+```{r}
+# --- Versión Mejorada: Filtrando películas con pocos votos ---
+
+
+movies_filtradas <- subset(movies, voteCount > 100)
+
+
+mejores_reales <- movies_filtradas[order(movies_filtradas$voteAvg, decreasing = TRUE), c("director", "originalTitle", "voteAvg")]
+
+print(head(mejores_reales, 20))
+```
