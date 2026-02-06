@@ -25,7 +25,8 @@ colnames(movies)
 ### Ejercicio 1
 
 ```{r variables numéricas}
-numericas <- c("budget","revenue","runtime","genresAmount","productionCoAmount","productionCountriesAmount","actorsAmount","castWomenAmount","castMenAmount","releaseYear") #Seleccionar solo numéricas
+numericas <- c("budget","revenue","runtime","genresAmount","productionCoAmount","productionCountriesAmount","actorsAmount","castWomenAmount",
+"castMenAmount","releaseYear", "popularity", "voteCount", "voteAvg") #Seleccionar solo numéricas
 movies_num <- movies[, numericas]
 colnames(movies_num)
 ```
@@ -39,9 +40,13 @@ El conjunto de datos está formado por '`r ncol(movies_num)` variables cuantitat
 summary(movies_num)
 ```
 
+### Ejercicio 2
+## Este ejercicio se realizo en una tabla en el documento de entrega del laboratorio.
+
+### Ejercicio 3
 ```{r normalidad de variables cuantitativas}
 hist(movies_num$budget)
-boxplot(movies_num)
+boxplot(movies_num$budget)
 lillie.test(movies_num$budget)
 ```
 La variable "budget" no sigue una distribución normal.
@@ -100,4 +105,81 @@ boxplot(movies_num$releaseYear)
 lillie.test(movies_num$releaseYear)
 ```
 
+```{r}
+hist(movies_num$popularity)
+boxplot(movies_num$popularity)
+lillie.test(movies_num$popularity)
+```
+
+```{r}
+hist(movies_num$voteCount)
+boxplot(movies_num$voteCount)
+lillie.test(movies_num$voteCount)
+```
+
+```{r}
+hist(movies_num$voteAvg)
+boxplot(movies_num$voteAvg)
+lillie.test(movies_num$voteAvg)
+```
+
+
+
+```{r}
+table(movies$originalLanguage)
+table(movies$video)
+```
+
+### Ejercicio 4.1
+
+```{r}
+top_budget <- movies[order(movies$budget, decreasing = TRUE), c("originalTitle", "budget")]
+head(top_budget, 10)
+```
+
+### Ejercicio 4.2 
+```{r}
+top_revenue <- movies[order(movies$revenue, decreasing = TRUE), c("originalTitle", "revenue")]
+head(top_revenue, 10)
+```
+
+
+### Ejercicio 4.3 
+```{r}
+mas_votos <- movies[which.max(movies$voteCount), c("originalTitle", "voteCount")]
+print(mas_votos)
+```
+
+
+### Ejercicio 4.4
+```{r}
+peor_pelicula <- movies[which.min(movies$voteAvg), c("originalTitle", "voteAvg")]
+print(peor_pelicula)
+```
+
+
+### Ejercicio 4.5
+```{r}
+#¿Cuántas películas se hicieron en cada año?
+peliculas_por_anio <- table(movies$releaseYear)
+df_peliculas_anio <- as.data.frame(peliculas_por_anio)
+colnames(df_peliculas_anio) <- c("Anio", "Cantidad")
+```
+
+```{r}
+#¿En qué año se hicieron más películas?
+anio_mas_productivo <- df_peliculas_anio[which.max(df_peliculas_anio$Cantidad), ]
+print(paste("El año con más películas fue:", anio_mas_productivo$Anio, "con", anio_mas_productivo$Cantidad, "películas."))
+```
+
+```{r}
+#Grafica de barras
+df_peliculas_anio$AnioNum <- as.numeric(as.character(df_peliculas_anio$Anio))
+ggplot(df_peliculas_anio, aes(x = AnioNum, y = Cantidad)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Cantidad de Películas por Año",
+       x = "Año de Lanzamiento",
+       y = "Número de Películas") +
+  theme_minimal()
+```
 
